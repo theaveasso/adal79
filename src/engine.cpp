@@ -3,7 +3,9 @@
 #include "SDL3/SDL_events.h"
 #include "SDL3/SDL_init.h"
 #include "SDL3/SDL_log.h"
+
 #include "adal79/scene.h"
+#include <cassert>
 
 engine::engine() : engine("default", 1280, 720) {}
 
@@ -40,20 +42,27 @@ bool engine::on_init() {
 
   SDL_LogInfo(0, "successfully initialze engine core;");
 
-  m_registry->get_registry().ctx().emplace<SDL_Renderer*>(m_renderer.get());
+  m_registry->get_registry().ctx().emplace<SDL_Renderer *>(m_renderer.get());
 
   return true;
 }
 
 void engine::run() {
-  auto intro_s = std::make_shared<intro_scene>(m_registry->get_registry());
-  auto game_s = std::make_shared<game_scene>(m_registry->get_registry());
+  // scenes
+  auto intro_s = make_shared<intro_scene>(m_registry->get_registry());
+  auto game_s = make_shared<game_scene>(m_registry->get_registry());
 
-  auto& sm = m_registry->scene_system();
-  auto intro_scene_id = sm.add(intro_s);
-  auto game_scene_id = sm.add(game_s);
+  // systems
+  auto scene_manager = make_shared<s_scene>();
+  assert(scene_manager != nullptr && "failed to create scene manager");
+  m_registry->get_registry().ctx().emplace<shared_ptr<s_scene>>(scene_manager);
 
-  sm.switch_to(intro_scene_id);
+  auto intro_scene_id = scene_manager->add(intro_s);
+  auto game_scene_id = scene_manager->add(game_s);
+
+  intro_s->set_switch_to_scene_id(game_scene_id);
+
+  scene_manager->switch_to(intro_scene_id);
 
   while (!m_window_should_close) {
     while (SDL_PollEvent(&m_event)) {
@@ -65,7 +74,7 @@ void engine::run() {
       }
     }
 
-    sm.run(2.0);
+    scene_manager->run(2.0);
   }
 
   on_teardown();

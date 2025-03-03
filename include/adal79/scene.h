@@ -21,6 +21,7 @@ public:
   virtual void on_event() = 0;
 
   entt::registry &get_registry() { return m_registry; }
+
 protected:
   entt::registry &m_registry;
 };
@@ -39,6 +40,13 @@ public:
   void on_last_update(float dt) override;
   void on_render() override;
   void on_event() override;
+
+  void set_switch_to_scene_id(unsigned int id);
+
+private:
+  unsigned int m_switch_to_scene_id;
+  float m_visible_duration{3};
+  float m_last_duration{};
 };
 
 class game_scene final : public scene {

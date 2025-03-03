@@ -40,7 +40,6 @@ public:
 
 class s_scene final : public system {
 public:
-  s_scene();
   void run(entt::registry &r) override {};
   void run(float dt) override;
 

@@ -2,8 +2,6 @@
 #include "adal79/scene.h"
 #include <utility>
 
-s_scene::s_scene() {}
-
 void s_scene::run(float dt) {
   if (m_current_scene) {
     m_current_scene->on_event();
