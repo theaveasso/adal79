@@ -1,12 +1,66 @@
-#include "adal79/system.h"
-#include "adal79/scene.h"
+#include <cassert>
 #include <utility>
+
+#include <SDL3_image/SDL_image.h>
+
+#include "adal79/scene.h"
+#include "adal79/system.h"
 
 namespace adl {
 system::system(entt::registry &r) : m_registry(r) {}
 s_asset::s_asset(entt::registry &r) : system(r) {}
 s_component::s_component(entt::registry &r) : system(r) {}
 s_scene::s_scene(entt::registry &r) : system(r) {}
+
+unsigned int s_asset::texture_add(std::string_view path) {
+  auto it = m_textures.find(path);
+  if (it != m_textures.end()) {
+    return it->second.first;
+  }
+
+  auto renderer = m_registry.ctx().get<SDL_Renderer *>();
+  assert(renderer != nullptr && "renderer is null");
+
+  auto surf = IMG_Load(std::string(path).c_str());
+  if (!surf) {
+    SDL_LogError(SDL_LOG_CATEGORY_RENDER,
+                 "failed to load image from path: %s\n[error]: %s",
+                 std::string(path).c_str(), SDL_GetError());
+    return -1;
+  }
+
+  auto texture = SDL_CreateTextureFromSurface(renderer, surf);
+  SDL_DestroySurface(surf);
+  if (!texture) {
+    SDL_LogError(SDL_LOG_CATEGORY_RENDER,
+                 "failed to create texture from surf!\n[error]: %s",
+                 SDL_GetError());
+    return -1;
+  }
+
+  m_textures.insert(
+      std::make_pair(path, std::make_pair(m_current_texture_id, texture)));
+
+  return m_current_texture_id++;
+}
+
+void s_asset::texture_remove(unsigned int id) {
+  for (auto it = m_textures.begin(); it != m_textures.end(); ++it) {
+    if (it->second.first == id) {
+      m_textures.erase(it->first);
+    }
+  }
+}
+
+SDL_Texture* s_asset::texture_get(unsigned int id) {
+  for (auto it = m_textures.begin(); it != m_textures.end(); ++it) {
+    if (it->second.first == id) {
+      return it->second.second;
+    }
+  }
+
+  return nullptr;
+}
 
 void s_scene::run(float dt) {
   if (m_current_scene) {

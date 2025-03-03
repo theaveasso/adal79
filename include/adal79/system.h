@@ -9,6 +9,8 @@
 
 #include <SDL3/SDL.h>
 
+#include "adal79.h"
+
 namespace adl {
 class scene;
 
@@ -25,7 +27,18 @@ protected:
 class s_asset final : public system {
 public:
   explicit s_asset(entt::registry &r);
-  void load_from_rendered_text(std::string_view text, SDL_Color color);
+
+  unsigned int texture_add(std::string_view path);
+  void texture_remove(unsigned int id);
+  SDL_Texture* texture_get(unsigned int id);
+
+  void load_texture_from_rendered_text(std::string_view text, SDL_Color color);
+
+private:
+  using texture_id_pair = std::pair<unsigned int, SDL_Texture*>;
+
+  unsigned int m_current_texture_id;
+  std::unordered_map<std::string_view, texture_id_pair> m_textures;
 };
 
 class s_component final : public system {
@@ -37,9 +50,7 @@ public:
     m_registry.emplace<T>(e, std::forward<Args>(args)...);
   }
 
-  template <typename T> T &get(entt::entity &e) {
-    return m_registry.get<T>(e);
-  }
+  template <typename T> T &get(entt::entity &e) { return m_registry.get<T>(e); }
 
   template <typename T> void remove(entt::entity &e) {
     m_registry.remove<T>(e);

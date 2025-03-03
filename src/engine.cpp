@@ -1,4 +1,5 @@
 #include <cassert>
+#include <filesystem>
 
 #include <SDL3/SDL_events.h>
 #include <SDL3/SDL_init.h>
@@ -24,6 +25,8 @@ engine::engine(std::string_view ptitle, uint16_t pwidth, uint16_t pheight)
 }
 
 bool engine::on_init() {
+  std::filesystem::current_path("..");
+
   if (!SDL_Init(SDL_INIT_VIDEO)) {
     SDL_Log("failed to init SDL_INIT_VIDEO: %s", SDL_GetError());
     return false;

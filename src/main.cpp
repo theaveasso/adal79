@@ -1,5 +1,4 @@
 #define DATA_DIR "data"
-#define ASSET_DIR "asset"
 
 #include "adal79/engine.h"
 

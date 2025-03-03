@@ -9,4 +9,6 @@ using std::shared_ptr;
 using std::make_unique;
 using std::unique_ptr;
 
+#define ASSET_DIR "data/assets"
+
 #endif // ADAL79_H

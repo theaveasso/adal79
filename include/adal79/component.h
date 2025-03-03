@@ -5,8 +5,10 @@ namespace adl {
 struct component {};
 
 struct c_texture final : public component {
-  float a;
-  c_texture(float pa) : a(pa) {};
+  unsigned int texture_id;
+  int width, height;
+
+  c_texture(unsigned int pid) : texture_id(pid) {};
 };
 } // namespace adl
 
