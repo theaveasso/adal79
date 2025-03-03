@@ -1,12 +1,16 @@
-#include "adal79/engine.h"
-
-#include "SDL3/SDL_events.h"
-#include "SDL3/SDL_init.h"
-#include "SDL3/SDL_log.h"
-
-#include "adal79/scene.h"
 #include <cassert>
 
+#include <SDL3/SDL_events.h>
+#include <SDL3/SDL_init.h>
+#include <SDL3/SDL_log.h>
+#include <SDL3_image/SDL_image.h>
+#include <SDL3_ttf/SDL_ttf.h>
+
+#include "adal79/engine.h"
+#include "adal79/scene.h"
+#include "adal79/system.h"
+
+namespace adl {
 engine::engine() : engine("default", 1280, 720) {}
 
 engine::engine(std::string_view ptitle, uint16_t pwidth, uint16_t pheight)
@@ -25,6 +29,11 @@ bool engine::on_init() {
     return false;
   };
 
+  if (!TTF_Init()) {
+    SDL_Log("failed to init TTF_Init: %s", SDL_GetError());
+    return false;
+  }
+
   m_window.reset(SDL_CreateWindow(m_title.c_str(), m_width, m_height, 0));
   if (m_window.get() == nullptr) {
     SDL_Log("failed to create SDL_Window: %s", SDL_GetError());
@@ -40,22 +49,39 @@ bool engine::on_init() {
 
   m_registry = std::make_unique<registry>();
 
-  SDL_LogInfo(0, "successfully initialze engine core;");
-
   m_registry->get_registry().ctx().emplace<SDL_Renderer *>(m_renderer.get());
+
+  auto asset_manager = make_shared<s_asset>(m_registry->get_registry());
+  if (!asset_manager) {
+    SDL_Log("can't create asset_manager");
+  }
+  assert(asset_manager && "failed to create asset manager");
+  m_registry->get_registry().ctx().emplace<shared_ptr<s_asset>>(asset_manager);
+
+  auto component_manager = make_shared<s_component>(m_registry->get_registry());
+  assert(component_manager && "failed to create component manager");
+  m_registry->get_registry().ctx().emplace<shared_ptr<s_component>>(
+      component_manager);
+
+  auto scene_manager = make_shared<s_scene>(m_registry->get_registry());
+  assert(scene_manager && "failed to create scene manager");
+  m_registry->get_registry().ctx().emplace<shared_ptr<s_scene>>(scene_manager);
 
   return true;
 }
 
 void engine::run() {
   // scenes
-  auto intro_s = make_shared<intro_scene>(m_registry->get_registry());
-  auto game_s = make_shared<game_scene>(m_registry->get_registry());
+  auto intro_s = make_shared<intro_scene>();
+  auto game_s = make_shared<game_scene>();
 
-  // systems
-  auto scene_manager = make_shared<s_scene>();
-  assert(scene_manager != nullptr && "failed to create scene manager");
-  m_registry->get_registry().ctx().emplace<shared_ptr<s_scene>>(scene_manager);
+  auto scene_manager =
+      m_registry->get_registry().ctx().get<shared_ptr<s_scene>>();
+  assert(scene_manager && "failed to create component manager");
+
+  auto asset_manager =
+      m_registry->get_registry().ctx().get<shared_ptr<s_asset>>();
+  assert(asset_manager && "failed to create asset manager");
 
   auto intro_scene_id = scene_manager->add(intro_s);
   auto game_scene_id = scene_manager->add(game_s);
@@ -80,4 +106,9 @@ void engine::run() {
   on_teardown();
 }
 
-void engine::on_teardown() { SDL_Quit(); }
+void engine::on_teardown() {
+  TTF_Quit();
+  SDL_Quit();
+}
+
+} // namespace adl

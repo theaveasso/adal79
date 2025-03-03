@@ -1,45 +1,39 @@
 #ifndef ADAL79_SCENE_H
 #define ADAL79_SCENE_H
 
+#include <SDL3_ttf/SDL_ttf.h>
+
 #include "registry.h"
 
+namespace adl {
 class scene {
 public:
-  explicit scene(entt::registry &r);
-
   virtual ~scene() = default;
 
-  virtual void on_create() = 0;
-  virtual void on_teardown() = 0;
+  virtual void on_create(entt::registry &r) = 0;
+  virtual void on_teardown(entt::registry &r) = 0;
 
-  virtual void on_enter() = 0;
-  virtual void on_exit() = 0;
+  virtual void on_enter(entt::registry &r) = 0;
+  virtual void on_exit(entt::registry &r) = 0;
 
-  virtual void on_update(float dt) = 0;
-  virtual void on_last_update(float dt) = 0;
-  virtual void on_render() = 0;
-  virtual void on_event() = 0;
-
-  entt::registry &get_registry() { return m_registry; }
-
-protected:
-  entt::registry &m_registry;
+  virtual void on_update(entt::registry &r, float dt) = 0;
+  virtual void on_last_update(entt::registry &r, float dt) = 0;
+  virtual void on_render(entt::registry &r) = 0;
+  virtual void on_event(entt::registry &r) = 0;
 };
 
 class intro_scene final : public scene {
 public:
-  explicit intro_scene(entt::registry &r);
+  void on_create(entt::registry &r) override;
+  void on_teardown(entt::registry &r) override;
 
-  void on_create() override;
-  void on_teardown() override;
+  void on_enter(entt::registry &r) override;
+  void on_exit(entt::registry &r) override;
 
-  void on_enter() override;
-  void on_exit() override;
-
-  void on_update(float dt) override;
-  void on_last_update(float dt) override;
-  void on_render() override;
-  void on_event() override;
+  void on_update(entt::registry &r, float dt) override;
+  void on_last_update(entt::registry &r, float dt) override;
+  void on_render(entt::registry &r) override;
+  void on_event(entt::registry &r) override;
 
   void set_switch_to_scene_id(unsigned int id);
 
@@ -51,18 +45,17 @@ private:
 
 class game_scene final : public scene {
 public:
-  explicit game_scene(entt::registry &r);
+  void on_create(entt::registry &r) override;
+  void on_teardown(entt::registry &r) override;
 
-  void on_create() override;
-  void on_teardown() override;
+  void on_enter(entt::registry &r) override;
+  void on_exit(entt::registry &r) override;
 
-  void on_enter() override;
-  void on_exit() override;
-
-  void on_update(float dt) override;
-  void on_last_update(float dt) override;
-  void on_render() override;
-  void on_event() override;
+  void on_update(entt::registry &r, float dt) override;
+  void on_last_update(entt::registry &r, float dt) override;
+  void on_render(entt::registry &r) override;
+  void on_event(entt::registry &r) override;
 };
+} // namespace adl
 
 #endif // ADAL79_SCENE_H

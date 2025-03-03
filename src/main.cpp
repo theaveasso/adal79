@@ -4,7 +4,7 @@
 #include "adal79/engine.h"
 
 int main(int argc, char** argv) {
-  engine e;
+  adl::engine e;
 
   e.run();
 

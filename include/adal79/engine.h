@@ -6,9 +6,10 @@
 #include <SDL3/SDL.h>
 #include <string_view>
 
-#include "registry.h"
 #include "adal79.h"
+#include "registry.h"
 
+namespace adl {
 class engine {
 public:
   engine();
@@ -33,5 +34,6 @@ private:
   bool on_init();
   void on_teardown();
 };
+} // namespace adl
 
 #endif // ADAL79_ENGINE_H
