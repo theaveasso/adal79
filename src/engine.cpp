@@ -76,13 +76,6 @@ bool engine::on_init() {
 }
 
 void engine::run() {
-  const double FRAME_TIME = 1.0 / 60;
-
-  double last_time = SDL_GetTicks();
-  double frame_counter = 0;
-  double unprocessed_time = 0;
-  int frames = 0;
-
   // scenes
   auto intro_s = make_shared<intro_scene>();
   auto game_s = make_shared<game_scene>();
@@ -102,6 +95,12 @@ void engine::run() {
 
   scene_manager->switch_to(intro_scene_id);
 
+
+  double frame_counter = 0;
+  double unprocessed_time = 0;
+  int frames = 0;
+
+  double last_time = SDL_GetTicks();
   while (!m_window_should_close) {
     while (SDL_PollEvent(&m_event)) {
       switch (m_event.type) {
@@ -111,7 +110,6 @@ void engine::run() {
         break;
       }
     }
-    bool render = false;
 
     double start_time = SDL_GetTicks();
     double passed_time = start_time - last_time;
@@ -125,20 +123,19 @@ void engine::run() {
       frame_counter = 0;
     }
 
-    std::cout << "------------------------------------------\n";
+    bool render = false;
     while (unprocessed_time > FRAME_TIME) {
-      //   scene_manager->run(FRAME_TIME);
-      //   render = true;
-      std::cout << unprocessed_time << " " << FRAME_TIME << "\n";
+      scene_manager->update(FRAME_TIME);
       unprocessed_time -= FRAME_TIME;
+      render = true;
     }
-    std::cout << "------------------------------------------\n";
-    // if (render) {
-    //   // scene_manager->run(FRAME_TIME);
-    //   frames++;
-    // } else {
-    //   SDL_Delay(1);
-    // }
+
+    if (render) {
+      scene_manager->render();
+      frames++;
+    } else {
+      SDL_Delay(1);
+    }
   }
 
   on_teardown();
