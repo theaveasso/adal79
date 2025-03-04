@@ -46,8 +46,9 @@ public:
   explicit s_component(entt::registry &r);
 
   template <typename T, typename... Args>
-  void add(entt::entity &e, Args &&...args) {
+  T& add(entt::entity &e, Args &&...args) {
     m_registry.emplace<T>(e, std::forward<Args>(args)...);
+    return m_registry.get<T>(e);
   }
 
   template <typename T> T &get(entt::entity &e) { return m_registry.get<T>(e); }
@@ -57,8 +58,9 @@ public:
   }
 
   template <typename T, typename... Args>
-  void replace(entt::registry &r, entt::entity &e, Args &&...args) {
+  T& replace(entt::registry &r, entt::entity &e, Args &&...args) {
     m_registry.replace<T>(e, std::forward<Args>(args)...);
+    return m_registry.get<T>(e);
   }
 };
 

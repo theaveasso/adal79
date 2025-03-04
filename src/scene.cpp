@@ -16,11 +16,16 @@ void intro_scene::on_create(entt::registry &r) {
   auto asset_manager = r.ctx().get<shared_ptr<s_asset>>();
   assert(asset_manager && "failed to create asset manager");
 
-  auto bg_id = asset_manager->texture_add(
-      std::string(ASSET_DIR) + "/Crown_Gambit_Game_Intro_Screen.webp");
+  auto bg_id =
+      asset_manager->texture_add(std::string(ASSET_DIR) + "/main_screen.png");
 
   auto e_background = r.create();
-  component_manager->add<c_texture>(e_background, bg_id);
+  auto& e_background_texture =
+      component_manager->add<c_texture>(e_background, bg_id);
+  auto& e_background_sprite = component_manager->add<c_sprite>(e_background);
+
+  e_background_sprite.texture = asset_manager->texture_get(bg_id);
+  e_background_sprite.dest = {0, 0, 1280, 720};
 }
 void intro_scene::on_teardown(entt::registry &r) {}
 
@@ -49,11 +54,9 @@ void intro_scene::on_render(entt::registry &r) {
 
   SDL_RenderClear(renderer);
 
-  auto view = r.view<const c_texture>();
-  for (auto [entity, texture_component] : view->each()) {
-    auto texture = asset_manager->texture_get(texture_component.texture_id);
-    SDL_FRect render_quad = {0, 0, 1280, 720};
-    SDL_RenderTexture(renderer, texture, nullptr, &render_quad);
+  auto view = r.view<c_sprite>();
+  for (auto [entity, sprite_component] : view->each()) {
+    sprite_component.draw(renderer);
   }
 
   SDL_RenderPresent(renderer);

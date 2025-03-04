@@ -36,6 +36,21 @@ template <typename T> struct vec2 {
 using vec2i = vec2<int>;
 using vec2f = vec2<float>;
 using vec2u = vec2<unsigned int>;
-} // namespace math
+
+struct angle {
+  float rad{};
+
+  constexpr angle() = default;
+
+  // return the angles's value in degrees
+  [[nodiscard]] constexpr float to_degrees() const;
+
+  // return the angle's value in radians
+  [[nodiscard]] constexpr float to_radians() const;
+
+  constexpr angle degrees(float p_angle);
+  constexpr angle radians(float p_angle);
+};
+} // namespace adl
 
 #endif // ADAL79_MATH_H
