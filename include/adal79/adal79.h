@@ -9,6 +9,8 @@ using std::shared_ptr;
 using std::make_unique;
 using std::unique_ptr;
 
+constexpr int TARGET_FPS = 60;
+
 #define ASSET_DIR "data/assets"
 
-#endif // ADAL79_H
+#endif // ADAL79_

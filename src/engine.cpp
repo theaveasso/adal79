@@ -1,5 +1,6 @@
 #include <cassert>
 #include <filesystem>
+#include <iostream>
 
 #include <SDL3/SDL_events.h>
 #include <SDL3/SDL_init.h>
@@ -12,6 +13,7 @@
 #include "adal79/system.h"
 
 namespace adl {
+
 engine::engine() : engine("default", 1280, 720) {}
 
 engine::engine(std::string_view ptitle, uint16_t pwidth, uint16_t pheight)
@@ -48,7 +50,7 @@ bool engine::on_init() {
     SDL_Log("failed to create SDL_Renderer: %s", SDL_GetError());
     return false;
   }
-  SDL_SetRenderVSync(m_renderer.get(), -1);
+  SDL_SetRenderVSync(m_renderer.get(), SDL_RENDERER_VSYNC_ADAPTIVE);
 
   m_registry = std::make_unique<registry>();
 
@@ -74,6 +76,13 @@ bool engine::on_init() {
 }
 
 void engine::run() {
+  const double FRAME_TIME = 1.0 / 60;
+
+  double last_time = SDL_GetTicks();
+  double frame_counter = 0;
+  double unprocessed_time = 0;
+  int frames = 0;
+
   // scenes
   auto intro_s = make_shared<intro_scene>();
   auto game_s = make_shared<game_scene>();
@@ -102,8 +111,34 @@ void engine::run() {
         break;
       }
     }
+    bool render = false;
 
-    scene_manager->run(2.0);
+    double start_time = SDL_GetTicks();
+    double passed_time = start_time - last_time;
+    last_time = start_time;
+
+    unprocessed_time += passed_time;
+    frame_counter += passed_time;
+
+    if (frame_counter >= 1.0) {
+      frames = 0;
+      frame_counter = 0;
+    }
+
+    std::cout << "------------------------------------------\n";
+    while (unprocessed_time > FRAME_TIME) {
+      //   scene_manager->run(FRAME_TIME);
+      //   render = true;
+      std::cout << unprocessed_time << " " << FRAME_TIME << "\n";
+      unprocessed_time -= FRAME_TIME;
+    }
+    std::cout << "------------------------------------------\n";
+    // if (render) {
+    //   // scene_manager->run(FRAME_TIME);
+    //   frames++;
+    // } else {
+    //   SDL_Delay(1);
+    // }
   }
 
   on_teardown();
@@ -113,5 +148,4 @@ void engine::on_teardown() {
   TTF_Quit();
   SDL_Quit();
 }
-
 } // namespace adl

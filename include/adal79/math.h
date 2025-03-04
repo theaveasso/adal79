@@ -26,10 +26,20 @@ template <typename T> struct vec2 {
     return vec2(x + rhs.x, y + rhs.y);
   }
 
-  constexpr vec2 &operator+=(vec2<T> &rhs) {
-    this->x + rhs.x;
-    this->y + rhs.y;
+  constexpr vec2 &operator+=(const vec2 &rhs) {
+    this->x += rhs.x;
+    this->y += rhs.y;
     return *this;
+  }
+
+  constexpr vec2 &operator+=(T rhs) {
+    this->x += rhs;
+    this->y += rhs;
+    return *this;
+  }
+
+  constexpr vec2 operator*(T factor) const {
+    return {this->x * factor, this->y * factor};
   }
 };
 

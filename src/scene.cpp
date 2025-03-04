@@ -74,7 +74,9 @@ void game_scene::on_teardown(entt::registry &r) {}
 void game_scene::on_enter(entt::registry &r) {}
 void game_scene::on_exit(entt::registry &r) {}
 
-void game_scene::on_update(entt::registry &r, float dt) {}
+void game_scene::on_update(entt::registry &r, float dt) {
+  // should run every system
+}
 void game_scene::on_last_update(entt::registry &r, float dt) {}
 void game_scene::on_render(entt::registry &r) {}
 void game_scene::on_event(entt::registry &r) {}

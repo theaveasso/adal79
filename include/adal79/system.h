@@ -9,8 +9,6 @@
 
 #include <SDL3/SDL.h>
 
-#include "adal79.h"
-
 namespace adl {
 class scene;
 
@@ -68,7 +66,8 @@ class s_scene final : public system {
 public:
   explicit s_scene(entt::registry &r);
 
-  void run(float dt);
+  void update(float dt);
+  void render();
 
   unsigned int add(std::shared_ptr<scene> s);
   void remove(unsigned int id);

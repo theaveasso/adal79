@@ -52,7 +52,7 @@ void s_asset::texture_remove(unsigned int id) {
   }
 }
 
-SDL_Texture* s_asset::texture_get(unsigned int id) {
+SDL_Texture *s_asset::texture_get(unsigned int id) {
   for (auto it = m_textures.begin(); it != m_textures.end(); ++it) {
     if (it->second.first == id) {
       return it->second.second;
@@ -62,10 +62,15 @@ SDL_Texture* s_asset::texture_get(unsigned int id) {
   return nullptr;
 }
 
-void s_scene::run(float dt) {
+void s_scene::update(float dt) {
   if (m_current_scene) {
     m_current_scene->on_event(m_registry);
     m_current_scene->on_update(m_registry, dt);
+  }
+}
+
+void s_scene::render() {
+  if (m_current_scene) {
     m_current_scene->on_render(m_registry);
   }
 }
