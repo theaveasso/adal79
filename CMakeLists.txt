@@ -31,3 +31,8 @@ target_link_libraries("${PROJECT_NAME}" PRIVATE pthread SDL3::SDL3 SDL3_image::S
 target_include_directories("${PROJECT_NAME}" PRIVATE include)
 
 target_include_directories("${PROJECT_NAME}" PRIVATE extlibs/entt)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  target_compile_options("${PROJECT_NAME}" PRIVATE -g)
+endif()
+

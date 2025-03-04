@@ -75,6 +75,12 @@ void s_scene::render() {
   }
 }
 
+void s_scene::process_event() {
+  if (m_current_scene) {
+    m_current_scene->on_event(m_registry);
+  }
+}
+
 unsigned int s_scene::add(std::shared_ptr<scene> s) {
   auto inserted_scene = m_scenes.insert(std::make_pair(m_total_scene_count, s));
   inserted_scene.first->second->on_create(m_registry);

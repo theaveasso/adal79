@@ -31,13 +31,18 @@ struct c_transform {
 };
 
 // c_transform specifies translate, rotate, scale, shear, project
-struct c_sprite final {
+struct c_sprite {
   SDL_FRect dest, res;
   SDL_Texture *texture;
 
   c_sprite() = default;
 
   void draw(SDL_Renderer *renderer);
+};
+
+struct c_player_input {
+  float a = 0;
+  c_player_input() {};
 };
 } // namespace adl
 

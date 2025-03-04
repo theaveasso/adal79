@@ -4,6 +4,7 @@
 #include <SDL3_ttf/SDL_ttf.h>
 
 #include "registry.h"
+#include "adal79/system/input.h"
 
 namespace adl {
 class scene {
@@ -55,6 +56,9 @@ public:
   void on_last_update(entt::registry &r, float dt) override;
   void on_render(entt::registry &r) override;
   void on_event(entt::registry &r) override;
+
+private:
+  input m_input;
 };
 } // namespace adl
 

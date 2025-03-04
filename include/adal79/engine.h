@@ -8,6 +8,7 @@
 
 #include "adal79.h"
 #include "registry.h"
+#include "system.h"
 
 namespace adl {
 class engine {
@@ -32,6 +33,7 @@ private:
 
 private:
   bool on_init();
+  void on_event_poll(shared_ptr<s_scene> scene_manager);
   void on_teardown();
 };
 } // namespace adl

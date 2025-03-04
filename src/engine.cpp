@@ -1,11 +1,6 @@
 #include <cassert>
 #include <filesystem>
-#include <iostream>
 
-#include <SDL3/SDL_events.h>
-#include <SDL3/SDL_init.h>
-#include <SDL3/SDL_log.h>
-#include <SDL3_image/SDL_image.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
 #include "adal79/engine.h"
@@ -55,6 +50,7 @@ bool engine::on_init() {
   m_registry = std::make_unique<registry>();
 
   m_registry->get_registry().ctx().emplace<SDL_Renderer *>(m_renderer.get());
+  m_registry->get_registry().ctx().emplace<SDL_Event*>(m_event);
 
   auto asset_manager = make_shared<s_asset>(m_registry->get_registry());
   if (!asset_manager) {
@@ -73,6 +69,18 @@ bool engine::on_init() {
   m_registry->get_registry().ctx().emplace<shared_ptr<s_scene>>(scene_manager);
 
   return true;
+}
+
+void engine::on_event_poll(shared_ptr<s_scene> scene_manager) {
+    while (SDL_PollEvent(&m_event)) {
+      scene_manager->process_event();
+      switch (m_event.type) {
+      case SDL_EVENT_QUIT:
+        m_window_should_close = true;
+      default:
+        break;
+      }
+    }
 }
 
 void engine::run() {
@@ -95,22 +103,15 @@ void engine::run() {
 
   scene_manager->switch_to(intro_scene_id);
 
-
   double frame_counter = 0;
   double unprocessed_time = 0;
   int frames = 0;
 
   double last_time = SDL_GetTicks();
   while (!m_window_should_close) {
-    while (SDL_PollEvent(&m_event)) {
-      switch (m_event.type) {
-      case SDL_EVENT_QUIT:
-        m_window_should_close = true;
-      default:
-        break;
-      }
-    }
+    on_event_poll(scene_manager);
 
+    // TODO(xt8o) refactor to clock.reset();
     double start_time = SDL_GetTicks();
     double passed_time = start_time - last_time;
     last_time = start_time;
@@ -123,6 +124,7 @@ void engine::run() {
       frame_counter = 0;
     }
 
+    // refactor to make it more readable
     bool render = false;
     while (unprocessed_time > FRAME_TIME) {
       scene_manager->update(FRAME_TIME);

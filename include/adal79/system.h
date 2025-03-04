@@ -68,6 +68,7 @@ public:
 
   void update(float dt);
   void render();
+  void process_event();
 
   unsigned int add(std::shared_ptr<scene> s);
   void remove(unsigned int id);

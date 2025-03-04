@@ -20,9 +20,9 @@ void intro_scene::on_create(entt::registry &r) {
       asset_manager->texture_add(std::string(ASSET_DIR) + "/main_screen.png");
 
   auto e_background = r.create();
-  auto& e_background_texture =
+  auto &e_background_texture =
       component_manager->add<c_texture>(e_background, bg_id);
-  auto& e_background_sprite = component_manager->add<c_sprite>(e_background);
+  auto &e_background_sprite = component_manager->add<c_sprite>(e_background);
 
   e_background_sprite.texture = asset_manager->texture_get(bg_id);
   e_background_sprite.dest = {0, 0, 1280, 720};
@@ -68,17 +68,30 @@ void intro_scene::set_switch_to_scene_id(unsigned int id) {
   m_switch_to_scene_id = id;
 }
 
-void game_scene::on_create(entt::registry &r) {}
+void game_scene::on_create(entt::registry &r) {
+  auto component_manager = r.ctx().get<shared_ptr<s_component>>();
+  assert(component_manager && "failed to create component manager");
+
+  // create player
+  auto player = r.create();
+  component_manager->add<c_transform>(player);
+  component_manager->add<c_sprite>(player);
+  component_manager->add<c_player_input>(player);
+}
 void game_scene::on_teardown(entt::registry &r) {}
 
 void game_scene::on_enter(entt::registry &r) {}
 void game_scene::on_exit(entt::registry &r) {}
 
-void game_scene::on_update(entt::registry &r, float dt) {
-  // should run every system
-}
+void game_scene::on_update(entt::registry &r, float dt) {}
 void game_scene::on_last_update(entt::registry &r, float dt) {}
 void game_scene::on_render(entt::registry &r) {}
-void game_scene::on_event(entt::registry &r) {}
+
+void game_scene::on_event(entt::registry &r) {
+  auto &event = r.ctx().get<SDL_Event *>();
+  assert(event && "event is null");
+
+  m_input.update(event);
+}
 
 } // namespace adl
