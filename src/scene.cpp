@@ -89,7 +89,7 @@ void game_scene::on_render(entt::registry &r) {}
 
 void game_scene::on_event(entt::registry &r) {
   auto &event = r.ctx().get<SDL_Event *>();
-  assert(event && "event is null");
+  assert(event != nullptr && "event is null");
 
   m_input.update(event);
 }

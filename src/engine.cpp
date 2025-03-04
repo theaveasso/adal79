@@ -50,7 +50,7 @@ bool engine::on_init() {
   m_registry = std::make_unique<registry>();
 
   m_registry->get_registry().ctx().emplace<SDL_Renderer *>(m_renderer.get());
-  m_registry->get_registry().ctx().emplace<SDL_Event*>(m_event);
+  m_registry->get_registry().ctx().emplace<SDL_Event *>(&m_event);
 
   auto asset_manager = make_shared<s_asset>(m_registry->get_registry());
   if (!asset_manager) {
@@ -72,15 +72,15 @@ bool engine::on_init() {
 }
 
 void engine::on_event_poll(shared_ptr<s_scene> scene_manager) {
-    while (SDL_PollEvent(&m_event)) {
-      scene_manager->process_event();
-      switch (m_event.type) {
-      case SDL_EVENT_QUIT:
-        m_window_should_close = true;
-      default:
-        break;
-      }
+  while (SDL_PollEvent(&m_event)) {
+    scene_manager->process_event();
+    switch (m_event.type) {
+    case SDL_EVENT_QUIT:
+      m_window_should_close = true;
+    default:
+      break;
     }
+  }
 }
 
 void engine::run() {
