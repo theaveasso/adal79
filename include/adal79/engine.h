@@ -1,40 +1,56 @@
 #ifndef ADAL79_ENGINE_H
 #define ADAL79_ENGINE_H
 
-#include <string>
+#include <functional>
 
 #include <SDL3/SDL.h>
-#include <string_view>
 
 #include "adal79.h"
+#include "adal79/graphics/renderer.h"
+#include "adal79/window/window.h"
 #include "registry.h"
-#include "system.h"
 
 namespace adl {
+using init_cb = std::function<bool()>;
+using update_cb = std::function<void(float)>;
+using render_cb = std::function<void()>;
+using teardown_cb = std::function<void()>;
+
 class engine {
 public:
   engine();
-  explicit engine(std::string_view ptitle, uint16_t pwidth, uint16_t pheight);
+  explicit engine(const window_config &conf);
 
+public:
   void run();
+  inline float deltatime() { return m_deltatime; }
+
+  inline void on_init(init_cb cb) { m_init_callback = cb; }
+  inline void on_update(update_cb cb) { m_update_callback = cb; }
+  inline void on_render(render_cb cb) { m_render_callback = cb; }
+  inline void on_teardown(teardown_cb cb) { m_teardown_callback = cb; }
 
 private:
-  std::string m_title;
-  uint16_t m_width, m_height;
+  init_cb m_init_callback;
+  update_cb m_update_callback;
+  render_cb m_render_callback;
+  teardown_cb m_teardown_callback;
 
-  bool m_window_should_close = false;
-  double m_deltatime{};
+  float m_deltatime{};
+  bool m_window_should_close{false};
+
+  SDL_Event m_event;
 
   unique_ptr<registry> m_registry;
 
-  SDL_Event m_event;
-  unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> m_window;
-  unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> m_renderer;
+  window m_window;
+  renderer m_renderer;
 
 private:
-  bool on_init();
-  void on_event_poll(shared_ptr<s_scene> scene_manager);
-  void on_teardown();
+  bool init();
+  void update();
+  void render();
+  void teardown();
 };
 } // namespace adl
 
