@@ -5,10 +5,9 @@
 
 #include <SDL3/SDL.h>
 
-#include "adal79.h"
 #include "adal79/graphics/renderer.h"
 #include "adal79/window/window.h"
-#include "registry.h"
+#include "adal79/ecs/registry.h"
 
 namespace adl {
 using init_cb = std::function<bool()>;
@@ -21,7 +20,10 @@ public:
   engine();
   explicit engine(const window_config &conf);
 
+  ~engine() = default; 
+
 public:
+  bool init();
   void run();
   inline float deltatime() { return m_deltatime; }
 
@@ -41,13 +43,12 @@ private:
 
   SDL_Event m_event;
 
-  unique_ptr<registry> m_registry;
-
   window m_window;
   renderer m_renderer;
 
+  registry m_registry;
+
 private:
-  bool init();
   void update();
   void render();
   void teardown();

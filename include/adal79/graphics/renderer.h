@@ -9,6 +9,7 @@ namespace adl {
 class renderer {
 public:
   explicit renderer(SDL_Window *window);
+  ~renderer() = default;
 
   void clear();
   void preset();

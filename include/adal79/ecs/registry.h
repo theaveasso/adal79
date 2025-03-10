@@ -1,0 +1,26 @@
+#ifndef ADAL79_ECS_REGISTRY_H
+#define ADAL79_ECS_REGISTRY_H
+
+#include <entt.hpp>
+
+#include "adal79/ecs/component.h"
+#include "adal79/ecs/entity.h"
+
+namespace adl {
+class registry {
+public:
+  registry() = default;
+  ~registry() = default;
+
+  inline entt::registry &get_registry() { return m_registry; }
+
+  entity create_entity();
+  entity create_entity(const c_id &p_id);
+  entity create_entity(std::string_view p_name, std::string_view p_group);
+
+private:
+  entt::registry m_registry;
+};
+
+} // namespace adl
+#endif // ADAL79_ECS_REGISTRY_H

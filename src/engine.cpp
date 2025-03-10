@@ -8,18 +8,13 @@ namespace adl {
 engine::engine() : engine(window_config{}) {}
 
 engine::engine(const window_config &conf)
-    : m_window(conf), m_renderer(m_window.get_window()) {
-  if (!init()) {
-    SDL_LogError(1, "failed to contruct engine %s", SDL_GetError());
-    return;
-  }
-}
+    : m_window(conf), m_renderer(m_window.get_window()) {}
 
 bool engine::init() {
   std::filesystem::current_path("..");
 
-  if (!m_init_callback || m_init_callback()) {
-    return true;
+  if (m_init_callback) {
+    return m_init_callback();
   }
 
   return false;
@@ -41,10 +36,12 @@ void engine::update() {
 }
 
 void engine::render() {
+  m_renderer.clear();
   if (m_render_callback) {
     m_render_callback();
     m_renderer.draw();
   }
+  m_renderer.preset();
 }
 
 // bool engine::on_init() {
