@@ -33,15 +33,13 @@ bool renderer::init() {
 void renderer::draw() {
   clear();
 
-  auto view = m_registry.view<c_id, c_transform, c_sprite, c_circle>();
+  auto view = m_registry.view<c_id, c_transform, c_circle>();
   for (auto &entity : view) {
-    auto &sprite    = view.get<c_sprite>(entity);
     auto &transform = view.get<c_transform>(entity);
     auto &circle    = view.get<c_circle>(entity);
 
-    draw_circle_rgba(m_renderer.get(),
-                     vec2f{transform.t.matrix[12], transform.t.matrix[13]},
-                     circle.radius, circle.color);
+    draw_circle_rgba(m_renderer.get(), transform.get_position(), circle.radius,
+                     circle.color);
   }
 
   preset();

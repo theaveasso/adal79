@@ -14,12 +14,21 @@ struct c_id {
   std::string name  = "default";
   std::string group = "default";
 
-  c_id() = default;
+  c_id()            = default;
   c_id(std::string_view p_name, std::string_view p_group);
+};
+
+struct c_velocity {
+  vec2f vel    = {1.0, 1.0};
+
+  c_velocity() = default;
 };
 
 struct c_transform {
   transform t;
+
+  void         set_position(const vec2f &p_pos);
+  inline vec2f get_position() { return {t.matrix[12], t.matrix[13]}; }
 };
 
 struct c_sprite {

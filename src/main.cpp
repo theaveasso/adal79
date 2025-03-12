@@ -29,19 +29,55 @@ int main(int argc, char **argv) {
     circle.add<adl::c_id>("player", "default");
     circle.add<adl::c_circle>();
     circle.add<adl::c_transform>();
+    circle.add<adl::c_velocity>();
 
     return true;
   };
 
-  adl::update_cb game_update = [&](float dt) {
-    auto view = reg.get().view<adl::c_id, adl::c_transform, adl::c_circle>();
+  constexpr float gravity       = -9.8f;
+  constexpr float bounce_factor = 0.8f;
+
+  adl::update_cb game_update    = [&](float dt) {
+    auto view =
+        reg.get().view<adl::c_transform, adl::c_circle, adl::c_velocity>();
 
     for (auto &v : view) {
-      auto &id        = view.get<adl::c_id>(v);
       auto &transform = view.get<adl::c_transform>(v);
+      auto &circle    = view.get<adl::c_circle>(v);
+      auto &[velocity]     = view.get<adl::c_velocity>(v);
 
-      transform.t.translate(adl::vec2f{1280 * 0.5, 720 * 0.5});
-      auto &circle = view.get<adl::c_circle>(v);
+      velocity = {250, 250};
+      circle.radius   = 50;
+
+      // Apply gravity
+      // velocity.y += gravity * dt;
+
+      // Update position
+      auto pos = transform.get_position();
+      pos.x += velocity.x * dt;
+      pos.y += velocity.y * dt;
+
+      // Handle collisions
+      if (pos.y + circle.radius >= 720) {
+        pos.y = 720 - circle.radius;
+        velocity.y *= -bounce_factor;
+      }
+      if (pos.y - circle.radius <= 0) {
+        pos.y = circle.radius;
+        velocity.y *= -bounce_factor;
+      }
+      if (pos.x + circle.radius >= 1280) {
+        pos.x = 1280 - circle.radius;
+        velocity.x *= -bounce_factor;
+      }
+      if (pos.x - circle.radius <= 0) {
+        pos.x = circle.radius;
+        velocity.x *= -bounce_factor;
+      }
+
+      // Update transform
+      transform.set_position(pos);
+      std::cout << "pos " << pos.x << ", " << pos.y << "\n";
     }
   };
 
