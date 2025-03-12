@@ -2,9 +2,9 @@
 #define __ADAL79_GRAPHICS_RENDERER_H_
 
 #include <SDL3/SDL.h>
+#include <entt.hpp>
 
 #include "adal79/adal79.h"
-#include "adal79/ecs/component.h"
 
 namespace adl {
 
@@ -21,7 +21,7 @@ public:
   SDL_Renderer &get() { return *m_renderer; }
 
 private:
-  SDL_Window &m_window;
+  SDL_Window     &m_window;
   entt::registry &m_registry;
 
   unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> m_renderer;

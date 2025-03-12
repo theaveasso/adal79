@@ -10,7 +10,6 @@
 namespace adl {
 
 struct transform {
-  vec2f positon;
   std::array<float, 16> matrix{};
 
   constexpr transform() = default;
@@ -28,7 +27,11 @@ struct transform {
   constexpr vec2f tranform_point(vec2f p_point) const;
 
   // combine the current transform with a translation.
-  constexpr transform &translate(vec2f p_offset);
+  constexpr transform &translate(const vec2f &p_offset) {
+    matrix[12] += p_offset.x;
+    matrix[13] += p_offset.y;
+    return *this;
+  };
 
   // combine the current transform with a rotation.
   transform &rotate(angle p_angle);

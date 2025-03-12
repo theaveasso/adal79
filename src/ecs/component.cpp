@@ -2,6 +2,9 @@
 
 namespace adl {
 
+c_id::c_id(std::string_view p_name, std::string_view p_group)
+    : name(p_name), group(p_group) {}
+
 c_sprite::c_sprite(shared_ptr<texture> p_texture)
     : tex(p_texture), dest(), src() {}
 
@@ -13,5 +16,9 @@ c_sprite &c_sprite::set_tex(shared_ptr<texture> p_tex) {
   this->tex = p_tex;
   return *this;
 }
+
+c_circle::c_circle() {};
+
+c_circle::c_circle(float p_radius) : radius(p_radius) {}
 
 } // namespace adl

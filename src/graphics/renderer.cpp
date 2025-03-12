@@ -1,5 +1,8 @@
 #include <cassert>
+#include <iostream>
 
+#include "adal79/ecs/component.h"
+#include "adal79/graphics/gfx_primitives.h"
 #include "adal79/graphics/renderer.h"
 
 namespace adl {
@@ -30,11 +33,15 @@ bool renderer::init() {
 void renderer::draw() {
   clear();
 
-  auto view = m_registry.view<c_sprite>();
+  auto view = m_registry.view<c_id, c_transform, c_sprite, c_circle>();
   for (auto &entity : view) {
-    auto &sprite = view.get<c_sprite>(entity);
+    auto &sprite    = view.get<c_sprite>(entity);
+    auto &transform = view.get<c_transform>(entity);
+    auto &circle    = view.get<c_circle>(entity);
 
-    SDL_RenderTexture(m_renderer.get(), sprite.tex->get(), nullptr, &sprite.dest);
+    draw_circle_rgba(m_renderer.get(),
+                     vec2f{transform.t.matrix[12], transform.t.matrix[13]},
+                     circle.radius, circle.color);
   }
 
   preset();

@@ -12,6 +12,9 @@ struct window_config {
   std::string title;
   uint16_t width = 1280;
   uint16_t height = 720;
+
+  uint16_t target_fps = 60;
+  bool vsync = true;
 };
 
 class window {
@@ -20,7 +23,7 @@ public:
   explicit window(const window_config &pconf);
   ~window() = default;
 
-  void poll_event(SDL_Event& event);
+  void poll_event(SDL_Event &event);
 
   inline bool window_should_close() { return m_window_should_close; }
   inline SDL_Window &get() { return *m_window; }

@@ -24,24 +24,40 @@ bool engine::init() {
 }
 
 void engine::run() {
-  m_clock.restart();
+  clock frame_clock;
+  clock update_clock;
+
+  float accumalator = 0.0f;
 
   while (!m_window->window_should_close()) {
-    m_deltatime = m_clock.get_elapsed_time();
+    float frame_time = frame_clock.restart();
+    accumalator += frame_time;
+
     m_window->poll_event(m_event);
 
-    update();
+    while (accumalator >= FRAME_TIME) {
+      update(FRAME_TIME);
+      accumalator -= FRAME_TIME;
+    }
+
     render();
   }
 }
 
-void engine::update() {
+void engine::update(const float dt) {
   if (m_update_callback) {
-    m_update_callback(m_deltatime);
+    m_update_callback(dt);
   }
 }
 
-void engine::render() {
-  m_renderer->draw();
+void engine::render() { m_renderer->draw(); }
+
+void engine::set_vsync(const bool vsync) {
+  vsync ? m_engine_flag |= vsync_flag : m_engine_flag &= ~vsync_flag;
 }
+
+bool engine::is_vsync_enabled() const {
+  return (m_engine_flag & vsync_flag) != 0;
+}
+
 } // namespace adl
