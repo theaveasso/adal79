@@ -1,12 +1,14 @@
 #ifndef ADAL79_ENGINE_H
 #define ADAL79_ENGINE_H
 
+#include <ctime>
 #include <functional>
 
 #include <SDL3/SDL.h>
 
 #include "adal79/ecs/registry.h"
 #include "adal79/graphics/renderer.h"
+#include "adal79/system/clock.h"
 #include "adal79/system/asset_management_system.h"
 #include "adal79/window/window.h"
 
@@ -47,6 +49,7 @@ private:
   render_cb m_render_callback;
   teardown_cb m_teardown_callback;
 
+  clock m_clock;
   float m_deltatime{};
   bool m_window_should_close{false};
 

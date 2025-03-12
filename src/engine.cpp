@@ -24,7 +24,10 @@ bool engine::init() {
 }
 
 void engine::run() {
+  m_clock.restart();
+
   while (!m_window->window_should_close()) {
+    m_deltatime = m_clock.get_elapsed_time();
     m_window->poll_event(m_event);
 
     update();

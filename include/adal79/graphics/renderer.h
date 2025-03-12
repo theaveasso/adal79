@@ -10,7 +10,7 @@ namespace adl {
 
 class renderer {
 public:
-  explicit renderer(SDL_Window &p_window, entt::registry& p_registry);
+  explicit renderer(SDL_Window &p_window, entt::registry &p_registry);
   ~renderer() = default;
 
   inline void clear() { SDL_RenderClear(m_renderer.get()); }
@@ -18,11 +18,11 @@ public:
 
   void draw();
 
-  SDL_Renderer& get() { return *m_renderer; }
+  SDL_Renderer &get() { return *m_renderer; }
 
 private:
   SDL_Window &m_window;
-  entt::registry& m_registry;
+  entt::registry &m_registry;
 
   unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> m_renderer;
 
