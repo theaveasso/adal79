@@ -31,9 +31,9 @@ bool window::init() {
   return true;
 }
 
-void window::poll_event(SDL_Event *event) {
-  while (SDL_PollEvent(event)) {
-    switch (event->type) {
+void window::poll_event(SDL_Event &event) {
+  while (SDL_PollEvent(&event)) {
+    switch (event.type) {
     case SDL_EVENT_QUIT:
       m_window_should_close = true;
     default:

@@ -12,7 +12,7 @@ public:
   registry() = default;
   ~registry() = default;
 
-  inline entt::registry &get_registry() { return m_registry; }
+  inline entt::registry &get() { return m_registry; }
 
   entity create_entity();
   entity create_entity(const c_id &p_id);

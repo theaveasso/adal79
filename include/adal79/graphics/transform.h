@@ -8,6 +8,7 @@
 #include "adal79/math.h"
 
 namespace adl {
+
 struct transform {
   vec2f positon;
   std::array<float, 16> matrix{};
@@ -41,6 +42,7 @@ struct transform {
   // combine the current transform with a scaling.
   constexpr transform &scale(vec2f p_factors, vec2f p_center);
 };
+
 } // namespace adl
 
 #endif // ADAL79_GRAPHIC_TRANSFORM_H

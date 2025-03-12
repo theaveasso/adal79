@@ -14,7 +14,7 @@ public:
                   std::string_view group);
 
   template <typename T, typename... Args> void add_component(Args &&...args) {
-    m_registry->emplace<T>(m_entity, std::forward(args)...);
+    m_registry->emplace<T>(m_entity, std::forward<Args>(args)...);
   }
 
   template <typename T> void get_component() {

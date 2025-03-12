@@ -18,11 +18,12 @@ class window {
 public:
   window();
   explicit window(const window_config &pconf);
+  ~window() = default;
 
-  void poll_event(SDL_Event* event);
+  void poll_event(SDL_Event& event);
 
   inline bool window_should_close() { return m_window_should_close; }
-  inline SDL_Window *get_window() { return m_window.get(); }
+  inline SDL_Window &get() { return *m_window; }
 
 private:
   bool m_window_should_close{false};

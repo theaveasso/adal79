@@ -1,4 +1,4 @@
-#include "adal79/system/input.h"
+#include "adal79/window/input.h"
 
 namespace adl {
 

@@ -1,5 +1,6 @@
-#ifndef ADAL79_SYSTEM_INPUT_H
-#define ADAL79_SYSTEM_INPUT_H
+
+#ifndef ADAL79_WINDOW_INPUT_H
+#define ADAL79_WINDOW_INPUT_H
 
 #include <SDL3/SDL.h>
 
