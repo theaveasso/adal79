@@ -1,9 +1,9 @@
-#ifndef __ADAL79_GRAPHICS_GFX_PRIMITIVES_H_
-#define __ADAL79_GRAPHICS_GFX_PRIMITIVES_H_
+#ifndef __ADAL79_GRAPHIC_GFX_PRIMITIVES_H_
+#define __ADAL79_GRAPHIC_GFX_PRIMITIVES_H_
 
 #include <SDL3/SDL.h>
 
-#include "adal79/adal79.h"
+#include "adal79/adl79_define.hpp"
 #include "adal79/math.h"
 
 namespace adl {
@@ -17,4 +17,4 @@ void draw_circle_rgba(SDL_Renderer *p_renderer, const vec2f &p_pos, float p_rad,
 
 } // namespace adl
 
-#endif // __ADAL79_GRAPHICS_GFX_PRIMITIVES_H_
+#endif // __ADAL79_GRAPHIC_GFX_PRIMITIVES_H_

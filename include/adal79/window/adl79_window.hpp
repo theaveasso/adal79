@@ -4,7 +4,7 @@
 #include <SDL3/SDL.h>
 #include <string>
 
-#include "adal79/adal79.h"
+#include "adal79/adl79_define.hpp"
 
 namespace adl {
 

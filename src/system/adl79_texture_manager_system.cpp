@@ -1,6 +1,6 @@
-#include "adal79/system/asset_management_system.h"
-#include "adal79/adal79.h"
 #include <exception>
+
+#include "adal79/system/adl79_texture_manager_system.hpp"
 
 namespace adl {
 texture_manager::texture_manager(SDL_Renderer &p_renderer)
@@ -36,7 +36,7 @@ void texture_manager::unload_asset(std::string_view p_filename) {
 }
 
 shared_ptr<texture> texture_manager::create(std::string_view p_filename) {
-  auto tex = load_asset(p_filename);
+  auto tex             = load_asset(p_filename);
 
   auto texture_visitor = [](auto &&arg) {
     if constexpr (std::is_same_v<std::decay_t<decltype(arg)>,

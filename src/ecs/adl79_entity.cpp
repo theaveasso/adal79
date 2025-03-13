@@ -1,4 +1,4 @@
-#include "adal79/ecs/entity.h"
+#include "adal79/ecs/adl79_entity.hpp"
 
 namespace adl {
 entity::entity(entt::registry &p_registry)

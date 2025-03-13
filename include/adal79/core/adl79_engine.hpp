@@ -1,21 +1,21 @@
-#ifndef ADAL79_ENGINE_H
-#define ADAL79_ENGINE_H
+#ifndef __ADAL79_C0RE_ENGINE_H_
+#define __ADAL79_C0RE_ENGINE_H_
 
 #include <ctime>
 #include <functional>
 
 #include <SDL3/SDL.h>
 
-#include "adal79/ecs/registry.h"
-#include "adal79/graphics/renderer.h"
-#include "adal79/system/asset_management_system.h"
-#include "adal79/system/clock.h"
-#include "adal79/window/window.h"
+#include "adal79/core/adl79_renderer.hpp"
+#include "adal79/ecs/adl79_registry.hpp"
+#include "adal79/system/adl79_clock_system.hpp"
+#include "adal79/system/adl79_texture_manager_system.hpp"
+#include "adal79/window/adl79_window.hpp"
 
 namespace adl {
-using init_cb = std::function<bool()>;
-using update_cb = std::function<void(float)>;
-using render_cb = std::function<void()>;
+using init_cb     = std::function<bool()>;
+using update_cb   = std::function<void(float)>;
+using render_cb   = std::function<void()>;
 using teardown_cb = std::function<void()>;
 
 class engine {
@@ -50,21 +50,21 @@ public:
   bool is_vsync_enabled() const;
 
 private:
-  init_cb m_init_callback;
-  update_cb m_update_callback;
-  render_cb m_render_callback;
+  init_cb     m_init_callback;
+  update_cb   m_update_callback;
+  render_cb   m_render_callback;
   teardown_cb m_teardown_callback;
 
   uint16_t m_target_fps{0};
-  int m_engine_flag{0};
+  int      m_engine_flag{0};
 
   clock m_clock;
-  bool m_window_should_close{false};
+  bool  m_window_should_close{false};
 
   SDL_Event m_event;
 
   unique_ptr<registry> m_registry;
-  unique_ptr<window> m_window;
+  unique_ptr<window>   m_window;
   unique_ptr<renderer> m_renderer;
 
   unique_ptr<texture_manager> m_texture_system;

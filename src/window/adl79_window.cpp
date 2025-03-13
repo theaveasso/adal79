@@ -1,7 +1,6 @@
 #include <cassert>
-#include <string>
 
-#include "adal79/window/window.h"
+#include "adal79/window/adl79_window.hpp"
 
 namespace adl {
 window::window() : window(window_config{}) {}

@@ -1,4 +1,4 @@
-#include "adal79/ecs/component.h"
+#include "adal79/ecs/adl79_component.hpp"
 
 namespace adl {
 

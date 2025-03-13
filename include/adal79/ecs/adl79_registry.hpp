@@ -3,13 +3,13 @@
 
 #include <entt.hpp>
 
-#include "adal79/ecs/component.h"
-#include "adal79/ecs/entity.h"
+#include "adal79/ecs/adl79_component.hpp"
+#include "adal79/ecs/adl79_entity.hpp"
 
 namespace adl {
 class registry {
 public:
-  registry() = default;
+  registry()  = default;
   ~registry() = default;
 
   inline entt::registry &get() { return m_registry; }

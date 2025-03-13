@@ -1,4 +1,4 @@
-#include "adal79/graphics/gfx_primitives.h"
+#include "adal79/graphic/adl79_gfx_primitives.hpp"
 
 namespace adl {
 

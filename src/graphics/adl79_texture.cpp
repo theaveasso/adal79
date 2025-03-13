@@ -1,10 +1,9 @@
 #include <cassert>
-#include <string>
 
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 
-#include "adal79/graphics/texture.h"
+#include "adal79/graphic/adl79_texture.hpp"
 
 namespace adl {
 

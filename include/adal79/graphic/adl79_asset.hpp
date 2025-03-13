@@ -1,11 +1,10 @@
-#ifndef __ADAL79_GRAPHICS_ASSET_H_
-#define __ADAL79_GRAPHICS_ASSET_H_
+#ifndef __ADAL79_GRAPHIC_ASSET_H_
+#define __ADAL79_GRAPHIC_ASSET_H_
 
 #include <concepts>
 #include <string_view>
 
 #include <SDL3/SDL.h>
-#include <entt.hpp>
 
 namespace adl {
 
@@ -18,4 +17,4 @@ concept asset =
 
 } // namespace adl
 
-#endif // __ADAL79_GRAPHICS_ASSET_H_
+#endif // __ADAL79_GRAPHIC_ASSET_H_

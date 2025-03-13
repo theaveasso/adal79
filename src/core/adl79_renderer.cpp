@@ -1,9 +1,8 @@
 #include <cassert>
-#include <iostream>
 
-#include "adal79/ecs/component.h"
-#include "adal79/graphics/gfx_primitives.h"
-#include "adal79/graphics/renderer.h"
+#include "adal79/core/adl79_renderer.hpp"
+#include "adal79/ecs/adl79_component.hpp"
+#include "adal79/graphic/adl79_gfx_primitives.hpp"
 
 namespace adl {
 

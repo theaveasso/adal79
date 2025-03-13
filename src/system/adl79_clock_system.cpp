@@ -1,4 +1,4 @@
-#include "adal79/system/clock.h"
+#include "adal79/system/adl79_clock_system.hpp"
 
 namespace adl {
 

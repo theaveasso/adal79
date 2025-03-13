@@ -1,5 +1,5 @@
-#ifndef __ADAL79_GRAPHICS_TEXTURE_H_
-#define __ADAL79_GRAPHICS_TEXTURE_H_
+#ifndef __ADAL79_GRAPHIC_TEXTURE_H_
+#define __ADAL79_GRAPHIC_TEXTURE_H_
 
 #include <string_view>
 

@@ -1,11 +1,7 @@
 #include <cassert>
 #include <filesystem>
-#include <iostream>
 
-#include <adal79/adal79.h>
-#include <adal79/ecs/component.h>
-#include <adal79/engine.h>
-#include <adal79/graphics/texture.h>
+#include <adal79/adal79.hpp>
 
 #define CURRENT_DIR std::filesystem::current_path()
 #define ASSET_DIR   std::string(CURRENT_DIR) + "/data/assets"
@@ -77,7 +73,6 @@ int main(int argc, char **argv) {
 
       // Update transform
       transform.set_position(pos);
-      std::cout << "pos " << pos.x << ", " << pos.y << "\n";
     }
   };
 

@@ -1,12 +1,13 @@
-#ifndef ADAL79_ECS_COMPONENT_H
-#define ADAL79_ECS_COMPONENT_H
+#ifndef __ADAL79_ECS_COMPONENT_H_
+#define __ADAL79_ECS_COMPONENT_H_
 
-#include <entt.hpp>
 #include <string>
 
-#include "adal79/adal79.h"
-#include "adal79/graphics/texture.h"
-#include "adal79/graphics/transform.h"
+#include <entt.hpp>
+
+#include "adal79/adl79_define.hpp"
+#include "adal79/graphic/adl79_texture.hpp"
+#include "adal79/graphic/adl79_transform.hpp"
 
 namespace adl {
 
@@ -64,4 +65,5 @@ struct c_circle {
 };
 
 } // namespace adl
-#endif // ADAL79_ECS_COMPONENT_H
+
+#endif // __ADAL79_ECS_COMPONENT_H_
