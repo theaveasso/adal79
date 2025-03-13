@@ -24,4 +24,6 @@ constexpr adl_color adl_red{255, 0, 0, 255};
 constexpr adl_color adl_green{0, 255, 0, 255};
 constexpr adl_color adl_blue{0, 0, 255, 255};
 
+constexpr int adl_KEY_COUNT = 256;
+
 #endif // __ADAL79_ADL79_DEFINE_H_

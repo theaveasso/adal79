@@ -58,6 +58,7 @@ constexpr int adlk_KP_8                 = SDLK_KP_8;
 constexpr int adlk_KP_9                 = SDLK_KP_9;
 constexpr int adlk_KP_0                 = SDLK_KP_0;
 
+
 constexpr int adlk_RETURN               = SDLK_RETURN;
 constexpr int adlk_ESCAPE               = SDLK_ESCAPE;
 constexpr int adlk_BACKSPACE            = SDLK_BACKSPACE;
@@ -131,6 +132,7 @@ constexpr int adlk_KP_DIVIDE            = SDLK_KP_DIVIDE;
 constexpr int adlk_KP_MULTIPLY          = SDLK_KP_MULTIPLY;
 constexpr int adlk_KP_MINUS             = SDLK_KP_MINUS;
 constexpr int adlk_KP_PLUS              = SDLK_KP_PLUS;
+
 
 constexpr int adlk_KP_PERIOD            = SDLK_KP_PERIOD;
 constexpr int adlk_APPLICATION          = SDLK_APPLICATION;

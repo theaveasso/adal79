@@ -10,9 +10,8 @@ public:
   void update(bool p_pressed);
   void reset();
 
-  bool is_key_pressed{false};
-  bool is_key_down{false};
-  bool is_key_up{false};
+  int this_frame;
+  int last_frame;
 };
 
 } // namespace adl

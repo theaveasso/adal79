@@ -9,6 +9,7 @@
 #include "adal79/core/adl79_renderer.hpp"
 #include "adal79/ecs/adl79_registry.hpp"
 #include "adal79/system/adl79_clock_system.hpp"
+#include "adal79/system/adl79_input_manager_system.hpp"
 #include "adal79/system/adl79_texture_manager_system.hpp"
 #include "adal79/window/adl79_window.hpp"
 
@@ -68,6 +69,7 @@ private:
   unique_ptr<renderer> m_renderer;
 
   unique_ptr<texture_manager> m_texture_system;
+  input_manager              &m_input_system;
 
 private:
   void update(const float dt);

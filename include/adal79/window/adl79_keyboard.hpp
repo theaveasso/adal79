@@ -1,9 +1,11 @@
 #ifndef __ADAL79_WINDOW_ADL79_KEYBOARD_H_
 #define __ADAL79_WINDOW_ADL79_KEYBOARD_H_
 
-#include "adal79/window/adl79_input.hpp"
+#include <bitset>
+
 #include <SDL3/SDL.h>
-#include <map>
+
+#include "adal79/adl79_define.hpp"
 
 namespace adl {
 
@@ -14,14 +16,13 @@ public:
 
   void update();
 
-  void on_key_pressed(const int key);
-  void on_key_up(const int key);
-
   const bool is_key_pressed(const int key) const;
+  const bool is_key_down(const int key) const;
   const bool is_key_up(const int key) const;
 
 private:
-  std::map<int, input> m_inputs;
+  std::bitset<adl_KEY_COUNT> m_this_frame;
+  std::bitset<adl_KEY_COUNT> m_last_frame;
 };
 
 } // namespace adl

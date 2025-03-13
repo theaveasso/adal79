@@ -9,7 +9,8 @@ engine::engine() : engine(window_config{}) {}
 engine::engine(const window_config &conf)
     : m_registry(make_unique<registry>()), m_window(make_unique<window>(conf)),
       m_renderer(make_unique<renderer>(m_window->get(), m_registry->get())),
-      m_texture_system(make_unique<texture_manager>(m_renderer->get())) {}
+      m_texture_system(make_unique<texture_manager>(m_renderer->get())),
+      m_input_system(make_unique<input_manager>()) {}
 
 void engine::set_registry(unique_ptr<registry> p_registry) {
   m_registry = std::move(p_registry);
