@@ -21,7 +21,7 @@ class window {
 public:
   window();
   explicit window(const window_config &pconf);
-  ~window() = default;
+  ~window();
 
   void poll_event(SDL_Event &event);
 

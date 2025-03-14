@@ -6,21 +6,27 @@
 #include <SDL3/SDL.h>
 #include <entt.hpp>
 
-namespace adl {
+#include "adal79/math.h"
 
-class texture {
+namespace adl
+{
+
+class texture
+{
 public:
-  texture(SDL_Renderer& p_renderer);
+  texture(SDL_Renderer &p_renderer);
   ~texture();
 
   bool load(std::string_view p_filepath);
   void unload();
 
-  inline SDL_Texture* get() { return m_texture; }
+  inline SDL_Texture *get() { return m_texture; }
+  inline vec2i        get_size() { return vec2i{m_width, m_height}; }
 
 private:
-  SDL_Texture *m_texture;
-  SDL_Renderer& m_renderer;
+  int           m_width, m_height;
+  SDL_Texture  *m_texture;
+  SDL_Renderer &m_renderer;
 };
 
 } // namespace adl

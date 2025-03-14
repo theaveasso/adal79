@@ -9,8 +9,8 @@
 namespace adl {
 class registry {
 public:
-  registry()  = default;
-  ~registry() = default;
+  registry();
+  ~registry();
 
   inline entt::registry &get() { return m_registry; }
 

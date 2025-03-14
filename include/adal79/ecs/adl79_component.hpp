@@ -9,59 +9,63 @@
 #include "adal79/graphic/adl79_texture.hpp"
 #include "adal79/graphic/adl79_transform.hpp"
 
-namespace adl {
+namespace adl
+{
 
-struct c_id {
+struct c_id
+{
   std::string name  = "default";
   std::string group = "default";
 
-  c_id()            = default;
+  c_id() = default;
   c_id(std::string_view p_name, std::string_view p_group);
 };
 
-struct c_velocity {
-  vec2f vel    = {1.0, 1.0};
+struct c_velocity
+{
+  vec2f vel = {1.0, 1.0};
 
   c_velocity() = default;
 };
 
-struct c_transform {
+struct transform_component
+{
   transform t;
 
   void         set_position(const vec2f &p_pos);
   inline vec2f get_position() { return {t.matrix[12], t.matrix[13]}; }
 };
 
-struct c_sprite {
+struct sprite_component
+{
   SDL_FRect           src{};
   SDL_FRect           dest{};
   shared_ptr<texture> tex;
 
-  c_sprite(shared_ptr<texture> p_texture);
-  c_sprite(shared_ptr<texture> p_texture, const SDL_FRect &p_src,
-           const SDL_FRect &p_dest);
-
-  template <typename T>
-  c_sprite &set(T c_sprite::*member, const T &value) {
-    this->*member = value;
-    return *this;
-  }
-
-  c_sprite &set_tex(shared_ptr<texture> p_tex);
+  sprite_component() {}
 };
 
-struct c_circle {
+struct c_circle
+{
   float     radius{10};
-  adl_color color{adl_red};
+  adl_Color color{adl_Red};
 
   c_circle();
   c_circle(float p_radius);
 
-  template <typename T>
-  c_circle &set(T c_circle::*member, T value) {
-    this->*member = value;
-    return *this;
-  }
+};
+
+struct animation_component
+{
+  int   current_frame  = 0;
+  int   frame_count    = 0;
+  int   frames_per_row = 1;
+  float frame_rate     = 24.0f;
+  float time_elapsed   = 0.0f;
+  bool  playing        = true;
+  bool  loop           = true;
+
+  animation_component() {}
 };
 
 } // namespace adl

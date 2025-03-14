@@ -11,7 +11,7 @@ namespace adl {
 /*
  */
 void draw_circle_rgba(SDL_Renderer *p_renderer, const vec2f &p_pos, float p_rad,
-                      const adl_color &p_color);
+                      const adl_Color &p_color);
 
 
 

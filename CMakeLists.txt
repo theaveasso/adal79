@@ -32,7 +32,10 @@ target_include_directories("${PROJECT_NAME}" PRIVATE include)
 
 target_include_directories("${PROJECT_NAME}" PRIVATE extlibs/entt)
 
+target_precompile_headers("${PROJECT_NAME}" PRIVATE "${CMAKE_SOURCE_DIR}/include/adal79/adl79_pch.hpp")
+
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  add_compile_definitions(adl_Debug)
   target_compile_options("${PROJECT_NAME}" PRIVATE -g)
 endif()
 

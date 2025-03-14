@@ -25,6 +25,9 @@ bool texture::load(std::string_view p_filename) {
                  std::string(p_filename).c_str(), SDL_GetError());
   }
 
+  m_width = surf->w;
+  m_height = surf->h;
+
   SDL_DestroySurface(surf);
 
   return true;
