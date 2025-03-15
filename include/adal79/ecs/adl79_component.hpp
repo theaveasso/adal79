@@ -5,6 +5,7 @@
 #include "adal79/ecs/component/adl79_drawable.hpp"
 #include "adal79/ecs/component/adl79_id.hpp"
 #include "adal79/ecs/component/adl79_keyboard_movement.hpp"
+#include "adal79/ecs/component/adl79_size.hpp"
 #include "adal79/ecs/component/adl79_sprite.hpp"
 #include "adal79/ecs/component/adl79_transform.hpp"
 

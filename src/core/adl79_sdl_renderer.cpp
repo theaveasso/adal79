@@ -44,6 +44,28 @@ void sdl_renderer::end_frame()
     SDL_RenderPresent(m_renderer.get());
 }
 
+void sdl_renderer::draw_rectangle_rec(rect rectangle, color color)
+{
+    SDL_SetRenderDrawColor(m_renderer.get(), color.r, color.g, color.b, color.a);
+    SDL_RenderFillRect(m_renderer.get(), &rectangle);
+}
+
+void sdl_renderer::draw_rectangle_lines_ex(rect rectangle, float line_thick, color color)
+{
+    SDL_SetRenderDrawColor(m_renderer.get(), color.r, color.g, color.b, color.a);
+
+    SDL_FRect top_line    = {rectangle.x - line_thick / 2, rectangle.y - line_thick / 2, rectangle.w + line_thick, line_thick};
+    SDL_FRect bottom_line = {
+        rectangle.x - line_thick / 2, rectangle.y + rectangle.h - line_thick / 2, rectangle.w + line_thick, line_thick};
+    SDL_FRect left_line = {rectangle.x - line_thick / 2, rectangle.y + line_thick / 2, line_thick, rectangle.h - line_thick};
+    SDL_FRect right_line = {rectangle.x + rectangle.w - line_thick / 2, rectangle.y + line_thick / 2, line_thick, rectangle.h - line_thick};
+
+    SDL_RenderFillRect(m_renderer.get(), &top_line);
+    SDL_RenderFillRect(m_renderer.get(), &bottom_line);
+    SDL_RenderFillRect(m_renderer.get(), &left_line);
+    SDL_RenderFillRect(m_renderer.get(), &right_line);
+}
+
 void sdl_renderer::draw_texture(const shared_ptr<texture>& texture, int posX, int posY, color tint)
 {
 }

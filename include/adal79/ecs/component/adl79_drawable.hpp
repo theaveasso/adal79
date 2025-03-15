@@ -15,6 +15,8 @@ struct drawable_component
 {
     int        sort_order = 0;
     draw_layer layer      = draw_layer::DEFAULT;
+
+    rect rect = {0, 0, 0, 0};
 };
 } // namespace adl
 
