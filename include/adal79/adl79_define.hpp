@@ -1,9 +1,9 @@
 #ifndef __ADAL79_ADL79_DEFINE_H_
 #define __ADAL79_ADL79_DEFINE_H_
 
+#include <iostream>
 #include <memory>
 #include <variant>
-#include <iostream>
 
 #include <SDL3/SDL.h>
 
@@ -17,14 +17,15 @@ constexpr int TARGET_FPS = 60;
 constexpr double FRAME_TIME = 1.0 / 60.0;
 
 template <typename T>
-using adl_result = std::variant<T, std::string>;
+using result = std::variant<T, std::string>;
 
-using adl_Color = SDL_FColor;
+using color = SDL_FColor;
+using rect = SDL_FRect;
 
-constexpr adl_Color adl_White{255, 255, 255, 255};
-constexpr adl_Color adl_Red{255, 0, 0, 255};
-constexpr adl_Color adl_Green{0, 255, 0, 255};
-constexpr adl_Color adl_Blue{0, 0, 255, 255};
+constexpr color adl_White{255, 255, 255, 255};
+constexpr color adl_Red{255, 0, 0, 255};
+constexpr color adl_Green{0, 255, 0, 255};
+constexpr color adl_Blue{0, 0, 255, 255};
 
 constexpr int adl_KEY_COUNT = 256;
 

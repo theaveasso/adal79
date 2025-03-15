@@ -1,12 +1,7 @@
-#ifndef __ADAL79_CORE_RENDERER_H_
-#define __ADAL79_CORE_RENDERER_H_
+#ifndef __ADAL79_CORE_SDL_RENDERER_HPP_
+#define __ADAL79_CORE_SDL_RENDERER_HPP_
 
-#include <SDL3/SDL.h>
-#include <entt.hpp>
-
-#include "adal79/adl79_define.hpp"
 #include "adal79/interface/adl79_irenderer.hpp"
-#include "adal79/math.h"
 
 namespace adl
 {
@@ -20,15 +15,11 @@ class sdl_renderer final : public irenderer
 	void begin_frame() override;
 	void end_frame() override;
 
-	void draw_texture( shared_ptr<texture> texture, int pos_x, int pos_y, adl_Color tint ) override;
-
-	void draw_texture_v( shared_ptr<texture> texture, vec2i position, adl_Color tint ) override;
-
-	void draw_texture_ex( shared_ptr<texture> texture, const SDL_FRect& source, vec2i position,
-						  adl_Color tint ) override;
-
-	void draw_texture_rec( shared_ptr<texture> texture, const SDL_FRect& source, const SDL_FRect& dest, vec2i origin,
-						   float rotation, adl_Color tint ) override;
+  void draw_texture(const shared_ptr<texture>& texture, int posX, int posY, color tint) override;
+  void draw_texture_v(const shared_ptr<texture>& texture, vec2 position, color tint) override;
+  void draw_texture_ex(const shared_ptr<texture>& texture, vec2 position, float rotation, float scale, color tint) override;
+  void draw_texture_rec(const shared_ptr<texture>& texture, rect source, vec2 position, color tint) override;
+  void draw_texture_pro(const shared_ptr<texture>& texture, rect source, rect dest, vec2 origin, float rotation, color tint) override;
 
 	inline SDL_Renderer& get() override { return *m_renderer; }
 

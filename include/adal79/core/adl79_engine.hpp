@@ -1,14 +1,9 @@
 #ifndef __ADAL79_C0RE_ENGINE_H_
 #define __ADAL79_C0RE_ENGINE_H_
 
-#include <ctime>
-#include <functional>
 
-#include <SDL3/SDL.h>
-
-#include "adal79/ecs/adl79_animation_system.hpp"
 #include "adal79/ecs/adl79_registry.hpp"
-#include "adal79/ecs/adl79_render_system.hpp"
+#include "adal79/ecs/adl79_system.hpp"
 #include "adal79/system/adl79_clock_system.hpp"
 #include "adal79/system/adl79_texture_manager_system.hpp"
 #include "adal79/window/adl79_window.hpp"

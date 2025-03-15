@@ -3,15 +3,18 @@ BasedOnStyle: Microsoft
 AllowAllConstructorInitializersOnNextLine: 'true'
 AllowShortCaseLabelsOnASingleLine: 'true'
 AllowShortFunctionsOnASingleLine: InlineOnly
+AlignConsecutiveDeclarations: true
+AlignConsecutiveAssignments:
+  Enabled: true
 AlwaysBreakTemplateDeclarations: 'Yes'
+ColumnLimit: 140
 BinPackArguments: 'false'
 BreakConstructorInitializers: BeforeComma
 PointerAlignment: Left
-SortIncludes: 'false'
+SortIncludes: 'true'
 SpaceBeforeParens: ControlStatements
 SpacesInParentheses: 'false'
-SpacesInSquareBrackets: 'true'
+SpacesInSquareBrackets: 'false'
 Standard: Auto
-TabWidth: '4'
-UseTab: Always
+TabWidth: '2'
 ...

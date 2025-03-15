@@ -1,7 +1,6 @@
-#ifndef __ADAL79_ECS_PHYSICS_SYSTEM_H_
-#define __ADAL79_ECS_PHYSICS_SYSTEM_H_
+#ifndef __ADAL79_ECS_SYSTEM_PHYSICS_HPP_
+#define __ADAL79_ECS_SYSTEM_PHYSICS_HPP_
 
-#include "adal79/ecs/adl79_registry.hpp"
 namespace adl
 {
 class physics_system
@@ -17,4 +16,4 @@ class physics_system
 };
 } // namespace adl
 
-#endif // __ADAL79_ECS_PHYSICS_SYSTEM_H_
+#endif // __ADAL79_ECS_SYSTEM_PHYSICS_HPP_

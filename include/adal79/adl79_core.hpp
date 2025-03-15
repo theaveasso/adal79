@@ -3,5 +3,6 @@
 
 #include <adal79/core/adl79_engine.hpp>
 #include <adal79/core/adl79_sdl_renderer.hpp>
+#include <adal79/core/adl79_mem_tracker.hpp>
 
 #endif // __ADAL79_ADL79_CORE_H_

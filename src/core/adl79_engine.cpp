@@ -1,7 +1,8 @@
 #include <cassert>
 
-#include "adal79/adl79_define.hpp"
 #include "adal79/core/adl79_engine.hpp"
+#include "adal79/ecs/adl79_system.hpp"
+#include "adal79/adl79_define.hpp"
 #include "adal79/core/adl79_sdl_renderer.hpp"
 
 namespace adl
